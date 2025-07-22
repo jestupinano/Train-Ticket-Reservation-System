@@ -27,13 +27,14 @@ public class TrainServiceImpl implements TrainService {
 			ps.setString(3, train.getFrom_stn());
 			ps.setString(4, train.getTo_stn());
 			ps.setLong(5, train.getSeats());
-			ps.setDouble(6, train.getFare());
-			ResultSet rs = ps.executeQuery();
-			if (rs.next()) {
-				responseCode = ResponseCode.SUCCESS.toString();
-			}
+			ps.setDouble(6, train.getFare());		
+			int rows = ps.executeUpdate();
+		       if (rows > 0) {
+		          responseCode = ResponseCode.SUCCESS.toString();
+		       }
 			ps.close();
 		} catch (SQLException | TrainException e) {
+			System.out.println("SQLException "+e.getMessage());
 			responseCode += " : " + e.getMessage();
 		}
 		return responseCode;
@@ -71,10 +72,10 @@ public class TrainServiceImpl implements TrainService {
 			ps.setLong(4, train.getSeats());
 			ps.setDouble(5, train.getFare());
 			ps.setDouble(6, train.getTr_no());
-			ResultSet rs = ps.executeQuery();
-			if (rs.next()) {
-				responseCode = ResponseCode.SUCCESS.toString();
-			}
+	        int rows = ps.executeUpdate(); 
+	        if (rows > 0) {
+	            responseCode = ResponseCode.SUCCESS.toString();
+	        }
 			ps.close();
 		} catch (SQLException | TrainException e) {
 			responseCode += " : " + e.getMessage();

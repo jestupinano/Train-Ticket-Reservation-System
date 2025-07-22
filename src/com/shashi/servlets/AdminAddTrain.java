@@ -47,7 +47,9 @@ public class AdminAddTrain extends HttpServlet {
 			train.setTo_stn(req.getParameter("tostation").toUpperCase());
 			train.setSeats(Integer.parseInt(req.getParameter("available")));
 			train.setFare(Double.parseDouble(req.getParameter("fare")));
+			System.out.println("aca1");
 			String message = trainService.addTrain(train);
+			System.out.println("aca2 "+message);
 			if (ResponseCode.SUCCESS.toString().equalsIgnoreCase(message)) {
 				RequestDispatcher rd = req.getRequestDispatcher("AddTrains.html");
 				rd.include(req, res);
