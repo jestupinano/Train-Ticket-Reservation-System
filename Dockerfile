@@ -1,19 +1,11 @@
-# ---- STAGE 1: build ----
-FROM maven:3.9.6-eclipse-temurin-8 AS build
-WORKDIR /app
-COPY pom.xml .
-RUN mvn -B -q -DskipTests clean verify || true
-COPY src ./src
-RUN mvn -B -DskipTests clean package
+FROM tomcat:8-jdk8-openjdk
 
-# ---- STAGE 2: runtime ----
-FROM tomcat:8.5-jdk8-temurin
-# opcional: eliminar apps por defecto
-RUN rm -rf /usr/local/tomcat/webapps/*
-# Copiar WAR
-COPY --from=build /app/target/*.war /usr/local/tomcat/webapps/ROOT.war
+RUN sed -i 's/Connector port="8080"/Connector port="8083"/' /usr/local/tomcat/conf/server.xml
+COPY target/TrainBook-1.0.0-SNAPSHOT.war /usr/local/tomcat/webapps/TrainBook.war
 
-# Configuración opcional de timezone/locale
-ENV TZ=America/Bogota
+# Expone el puerto 8080, que es el puerto predeterminado de Tomcat
+EXPOSE 8083
 
-EXPOSE 8080
+# Comando para iniciar Tomcat cuando el contenedor se ejecute
+# catalina.sh run inicia Tomcat en primer plano
+CMD ["catalina.sh", "run"]

@@ -156,18 +156,13 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserBean loginUser(String username, String password) throws TrainException {
 		UserBean customer = null;
-		System.out.println("login");
-		String query = "SELECT * FROM " + TABLE_NAME + " WHERE MAILID=\'" + username +"\'  AND PWORD=\'" + password+"\'" ;
-		System.out.println("query "+query);
+		String query = "SELECT * FROM " + TABLE_NAME + " WHERE MAILID=? AND PWORD=?";
 		try {
 			Connection con = DBUtil.getConnection();
-			System.out.println("con "+con);
 			PreparedStatement ps = con.prepareStatement(query);
-			System.out.println("ps "+ps);
-			//ps.setString(1, username);
-			//ps.setString(2, password);
+			ps.setString(1, username);
+			ps.setString(2, password);
 			ResultSet rs = ps.executeQuery();
-			System.out.println("rs "+rs);
 			if (rs.next()) {
 				customer = new UserBean();
 				customer.setFName(rs.getString("fname"));
@@ -181,7 +176,7 @@ public class UserServiceImpl implements UserService {
 			}
 			ps.close();
 		} catch (SQLException e) {
-			System.out.println("message "+ e.getMessage());
+			System.out.println(e.getMessage());
 			throw new TrainException(e.getMessage());
 		}
 		return customer;
