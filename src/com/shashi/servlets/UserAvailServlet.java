@@ -30,7 +30,8 @@ public class UserAvailServlet extends HttpServlet {
 
 		try {
 
-			String trainNo = req.getParameter("trainno");
+			String trainNoStr = req.getParameter("trainno");
+			long trainNo = Long.parseLong(trainNoStr); 
 			TrainBean train = trainService.getTrainById(trainNo);
 			if (train != null) {
 				RequestDispatcher rd = req.getRequestDispatcher("UserHome.html");

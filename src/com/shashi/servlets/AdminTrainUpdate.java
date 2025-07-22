@@ -33,7 +33,9 @@ public class AdminTrainUpdate extends HttpServlet {
 		PrintWriter pw = res.getWriter();
 
 		try {
-			String trainNo = req.getParameter("trainnumber");
+			String trainNoStr = req.getParameter("trainnumber");
+			long trainNo = Long.parseLong(trainNoStr); 
+
 			TrainBean train = trainService.getTrainById(trainNo);
 			if (train != null) {
 				RequestDispatcher rd = req.getRequestDispatcher("AdminHome.html");

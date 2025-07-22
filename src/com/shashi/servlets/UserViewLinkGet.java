@@ -27,7 +27,10 @@ public class UserViewLinkGet extends HttpServlet {
 		PrintWriter pw = res.getWriter();
 		TrainUtil.validateUserAuthorization(req, UserRole.CUSTOMER);
 		try {
-			String trainNo = req.getParameter("trainNo");
+			//String trainNo = req.getParameter("trainNo");
+			String trainNoStr = req.getParameter("trainNo");
+			long trainNo = Long.parseLong(trainNoStr);   // <-- convierte aquí
+
 			TrainBean train = trainService.getTrainById(trainNo);
 			if (train != null) {
 				RequestDispatcher rd = req.getRequestDispatcher("UserHome.html");

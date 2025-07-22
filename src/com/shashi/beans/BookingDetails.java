@@ -8,7 +8,7 @@ public class BookingDetails implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	private String mailId;
-	private String tr_no;
+	private Long tr_no;
 	private String date;
 	private String from_stn;
 	private String to_stn;
@@ -23,11 +23,11 @@ public class BookingDetails implements Serializable {
 		this.mailId = mailId;
 	}
 
-	public String getTr_no() {
+	public Long getTr_no() {
 		return tr_no;
 	}
 
-	public void setTr_no(String tr_no) {
+	public void setTr_no(Long tr_no) {
 		this.tr_no = tr_no;
 	}
 

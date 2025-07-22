@@ -83,13 +83,13 @@ public class TrainServiceImpl implements TrainService {
 	}
 
 	@Override
-	public TrainBean getTrainById(String trainNo) throws TrainException {
+	public TrainBean getTrainById(long trainNo) throws TrainException {
 		TrainBean train = null;
 		String query = "SELECT * FROM TRAIN WHERE TR_NO=?";
 		try {
 			Connection con = DBUtil.getConnection();
 			PreparedStatement ps = con.prepareStatement(query);
-			ps.setString(1, trainNo);
+			ps.setLong(1, trainNo);
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
 				train = new TrainBean();

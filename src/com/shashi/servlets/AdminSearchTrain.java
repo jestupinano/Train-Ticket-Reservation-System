@@ -35,7 +35,8 @@ public class AdminSearchTrain extends HttpServlet {
 		PrintWriter pw = res.getWriter();
 		TrainUtil.validateUserAuthorization(req, UserRole.ADMIN);
 		try {
-			String trainNo = req.getParameter("trainnumber");
+			String trainNoStr = req.getParameter("trainnumber");
+			long trainNo = Long.parseLong(trainNoStr);
 			TrainBean train = trainService.getTrainById(trainNo);
 			if (train != null) {
 				RequestDispatcher rd = req.getRequestDispatcher("AdminSearchTrain.html");

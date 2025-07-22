@@ -35,7 +35,8 @@ public class AdminViewLinkFwd extends HttpServlet {
 		PrintWriter pw = res.getWriter();
 		TrainUtil.validateUserAuthorization(req, UserRole.ADMIN);
 		try {
-			String trainNo = req.getParameter("trainNo");
+			String trainNoStr = req.getParameter("trainNo");
+			long trainNo = Long.parseLong(trainNoStr); 
 			TrainBean train = trainService.getTrainById(trainNo);
 			if (train != null) {
 				RequestDispatcher rd = req.getRequestDispatcher("AdminHome.html");

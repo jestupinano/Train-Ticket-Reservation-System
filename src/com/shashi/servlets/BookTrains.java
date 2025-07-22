@@ -43,7 +43,8 @@ public class BookTrains extends HttpServlet {
 
 		try {
 			int seat = (int) sct.getAttribute("seats");
-			String trainNo = (String) sct.getAttribute("trainnumber");
+			String trainNoStr = req.getParameter("trainnumber");
+			long trainNo = Long.parseLong(trainNoStr); 
 			String journeyDate = (String) sct.getAttribute("journeydate");
 			String seatClass = (String) sct.getAttribute("class");
 

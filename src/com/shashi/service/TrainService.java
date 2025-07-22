@@ -13,7 +13,7 @@ public interface TrainService {
 
 	public String updateTrain(TrainBean train);
 
-	public TrainBean getTrainById(String trainNo) throws TrainException;
+	public TrainBean getTrainById(long trainNo) throws TrainException;
 
 	public List<TrainBean> getAllTrains() throws TrainException;
 
