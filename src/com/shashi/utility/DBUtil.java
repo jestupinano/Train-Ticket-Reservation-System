@@ -16,6 +16,8 @@ public class DBUtil {
 		ResourceBundle rb = ResourceBundle.getBundle("application");
 
 		try {
+			System.out.println("hola");
+			System.out.println(DBUtil.class.getClassLoader().getResource("org/postgresql/Driver.class"));
 			Class.forName(rb.getString("driverName"));
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
