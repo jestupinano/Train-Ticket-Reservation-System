@@ -43,7 +43,7 @@ public class BookTrains extends HttpServlet {
 
 		try {
 			int seat = (int) sct.getAttribute("seats");
-			String trainNoStr = req.getParameter("trainnumber");
+			String trainNoStr = (String) sct.getAttribute("trainnumber");
 			long trainNo = Long.parseLong(trainNoStr); 
 			String journeyDate = (String) sct.getAttribute("journeydate");
 			String seatClass = (String) sct.getAttribute("class");
@@ -53,9 +53,8 @@ public class BookTrains extends HttpServlet {
 			SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
 			SimpleDateFormat outputFormat = new SimpleDateFormat("dd-MMM-yyyy");
 			java.util.Date utilDate;
-			String date = LocalDate.now().toString();
+			java.sql.Date currentDate = new java.sql.Date(System.currentTimeMillis());
 			utilDate = inputFormat.parse(journeyDate);
-			date = outputFormat.format(utilDate);
 
 			TrainBean train = trainService.getTrainById(trainNo);
 
@@ -79,7 +78,7 @@ public class BookTrains extends HttpServlet {
 						bookingDetails.setTr_no(trainNo);
 						bookingDetails.setSeats(seat);
 						bookingDetails.setMailId(userMailId);
-						bookingDetails.setDate(date);
+						bookingDetails.setDate(currentDate);
 
 						HistoryBean transaction = bookingService.createHistory(bookingDetails);
 						pw.println("<div class='tab'><p class='menu green'>" + seat

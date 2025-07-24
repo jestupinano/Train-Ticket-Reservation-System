@@ -1,6 +1,7 @@
 package com.shashi.beans;
 
 import java.io.Serializable;
+import java.sql.Date;
 
 public class BookingDetails implements Serializable {
 	/**
@@ -9,7 +10,7 @@ public class BookingDetails implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private String mailId;
 	private Long tr_no;
-	private String date;
+	private Date date;
 	private String from_stn;
 	private String to_stn;
 	private int seats;
@@ -31,11 +32,11 @@ public class BookingDetails implements Serializable {
 		this.tr_no = tr_no;
 	}
 
-	public String getDate() {
+	public Date getDate() {
 		return date;
 	}
 
-	public void setDate(String date) {
+	public void setDate(Date date) {
 		this.date = date;
 	}
 

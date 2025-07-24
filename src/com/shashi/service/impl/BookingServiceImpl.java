@@ -33,7 +33,7 @@ public class BookingServiceImpl implements BookingService {
 				transaction.setTransId(rs.getString("transid"));
 				transaction.setFrom_stn(rs.getString("from_stn"));
 				transaction.setTo_stn(rs.getString("to_stn"));
-				transaction.setDate(rs.getString("date"));
+				transaction.setDate(rs.getDate("date"));
 				transaction.setMailId(rs.getString("mailid"));
 				transaction.setSeats(rs.getInt("seats"));
 				transaction.setAmount(rs.getDouble("amount"));
@@ -60,7 +60,7 @@ public class BookingServiceImpl implements BookingService {
 			ps.setString(1, transactionId);
 			ps.setString(2, details.getMailId());
 			ps.setLong(3, details.getTr_no());
-			ps.setString(4, details.getDate());
+			ps.setDate(4, details.getDate());
 			ps.setString(5, details.getFrom_stn());
 			ps.setString(6, details.getTo_stn());
 			ps.setLong(7, details.getSeats());
