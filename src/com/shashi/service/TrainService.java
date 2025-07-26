@@ -9,7 +9,7 @@ public interface TrainService {
 
 	public String addTrain(TrainBean train);
 
-	public String deleteTrainById(String trainNo);
+	public String deleteTrainById(Long trainNo);
 
 	public String updateTrain(TrainBean train);
 

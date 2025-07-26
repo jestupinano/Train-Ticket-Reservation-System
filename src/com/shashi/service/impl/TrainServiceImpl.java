@@ -41,13 +41,13 @@ public class TrainServiceImpl implements TrainService {
 	}
 
 	@Override
-	public String deleteTrainById(String trainNo) {
+	public String deleteTrainById(Long trainNo) {
 		String responseCode = ResponseCode.FAILURE.toString();
 		String query = "DELETE FROM TRAIN WHERE TR_NO=?";
 		try {
 			Connection con = DBUtil.getConnection();
 			PreparedStatement ps = con.prepareStatement(query);
-			ps.setString(1, trainNo);
+			ps.setLong(1, trainNo);
 			int response = ps.executeUpdate();
 			if (response > 0) {
 				responseCode = ResponseCode.SUCCESS.toString();

@@ -39,7 +39,7 @@ public class AdminCancleTrain extends HttpServlet {
 		TrainUtil.validateUserAuthorization(req, UserRole.ADMIN);
 		try {
 			String trainNo = req.getParameter("trainno");
-			String message = trainService.deleteTrainById(trainNo);
+			String message = trainService.deleteTrainById(Long.parseLong(trainNo));
 			if (ResponseCode.SUCCESS.toString().equalsIgnoreCase(message)) {
 				RequestDispatcher rd = req.getRequestDispatcher("CancleTrain.html");
 				rd.include(req, res);

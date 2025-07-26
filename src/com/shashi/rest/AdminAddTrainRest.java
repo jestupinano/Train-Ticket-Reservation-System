@@ -144,7 +144,7 @@ public class AdminAddTrainRest extends HttpServlet {
         // TrainUtil.validateUserAuthorization(req, UserRole.ADMIN);
 
         try {
-            String result = trainService.deleteTrainById(String.valueOf(id));
+            String result = trainService.deleteTrainById(id);
 
             if (ResponseCode.SUCCESS.toString().equalsIgnoreCase(result)) {
                 JsonUtil.write(resp, HttpServletResponse.SC_OK,
