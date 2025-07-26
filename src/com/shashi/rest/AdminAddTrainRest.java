@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet(name = "TrainApiServlet", urlPatterns = "/api/trains/*")
 public class AdminAddTrainRest extends HttpServlet {
@@ -50,12 +51,51 @@ public class AdminAddTrainRest extends HttpServlet {
         }
     }
 
-    /** GET /api/trains/{id} -> obtener */
+    /** GET /api/trains/{id} -> obtener 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    	System.out.println("Servicio get "+req );
         Long id = extractId(req, resp);
         if (id == null) return;
 
+    	System.out.println("Servicio get "+req );
+        try {
+            TrainBean train = trainService.getTrainById(id);
+            if (train == null) {
+                resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Train not found");
+                return;
+            }
+            resp.setContentType("application/json");
+            mapper.writeValue(resp.getOutputStream(), train);
+        } catch (TrainException e) {
+            resp.sendError(e.getStatusCode(), e.getMessage());
+        }
+    }*/
+    /**  GET /api/trains           → lista todos
+     *   GET /api/trains/{id}      → detalle por ID          */
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+
+        // ── 1. ¿Hay id en la ruta?  ──────────────────────────────
+        Long id = extractId(req, resp);   // ← tu método utilitario
+        System.out.println("Servicio get "+req );
+        if (id == null) {                 // ⇒ NO HAY ID  →  LISTA
+            try {
+            	System.out.println("idnull " );
+                List<TrainBean> trains = trainService.getAllTrains();  // nuevo método en tu servicio/DAO
+
+            	System.out.println("trains " +trains);
+                resp.setContentType("application/json");
+                mapper.writeValue(resp.getOutputStream(), trains);
+            } catch (TrainException e) {
+
+            	System.out.println("TrainException " +e.getMessage());
+                resp.sendError(e.getStatusCode(), e.getMessage());
+            }
+            return;                       // importante: salimos aquí
+        }
+
+        // ── 2. Hay ID  →  detalle  ───────────────────────────────
         try {
             TrainBean train = trainService.getTrainById(id);
             if (train == null) {
@@ -68,7 +108,6 @@ public class AdminAddTrainRest extends HttpServlet {
             resp.sendError(e.getStatusCode(), e.getMessage());
         }
     }
-
     /** PUT /api/trains/{id} -> actualizar */
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -129,7 +168,6 @@ public class AdminAddTrainRest extends HttpServlet {
     private Long extractId(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String path = req.getPathInfo(); // e.g. "/1234"
         if (path == null || "/".equals(path)) {
-            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Train id required");
             return null;
         }
         try {
